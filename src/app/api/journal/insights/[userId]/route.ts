@@ -3,10 +3,10 @@ import db from '@/lib/db';
 
 export async function GET(
   req: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = await (params as any);
+    const { userId } = await params;
 
     const entries = db.prepare('SELECT * FROM journal_entries WHERE userId = ?').all(userId) as any[];
 
